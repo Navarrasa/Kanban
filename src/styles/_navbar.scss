@@ -1,0 +1,46 @@
+@use './_var.scss' as *;
+
+.header {
+    background-color: $accent;
+    color: $text-primary;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    
+    h1 {
+        font-size: 1.5rem;
+
+        a{
+            color: $text-primary;
+            text-decoration: none;
+        
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    nav {
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                display: inline;
+                margin-right: 1rem;
+
+                a {
+                    color: $text-primary;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
