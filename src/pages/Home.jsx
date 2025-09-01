@@ -2,7 +2,7 @@ import { Board } from '../components/board/Board';
 
 export function Home() {
   return (
-    <section>
+    <section className='section'>
       <Board />
     </section>
   );
