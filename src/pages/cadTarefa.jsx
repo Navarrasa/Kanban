@@ -20,15 +20,15 @@ export function CadTarefa() {
     .regex(/^(?![^\w\s]+$).*/, "Nome do setor não pode ser apenas símbolos")
     .regex(/^(?!\s*$).+/, "Nome do setor não pode estar em branco"),
 
-  prioridade: z.enum(['1', '2', '3'], {
+  prioridade: z.enum(['low', 'medium', 'high'], {
     errorMap: () => ({ message: "Selecione uma prioridade" })
-  }).default('1'),
+  }).default('low'),
 
-  status: z.enum(['1', '2', '3'], {
+  status: z.enum(['pending', 'in_progress', 'completed'], {
     errorMap: () => ({ message: "Selecione um status" })
-  }).default('1'),
+  }).default('pending'),
 
-  usuario: z.string()
+  id_usuario: z.string()
     .min(1, "Insira ID do usuário")
     .max(100, "ID do usuário deve ter até 100 caracteres")
     .regex(/^(?![^\w\s]+$).*/, "ID do usuário não pode ser apenas símbolos")
@@ -45,8 +45,8 @@ export function CadTarefa() {
   } = useForm({
     resolver: zodResolver(schemaCadTarefa),
     defaultValues: {
-      prioridade: "1",
-      status: "1"
+      prioridade: "low",
+      status: "pending"
     }
   });
 
@@ -55,7 +55,7 @@ export function CadTarefa() {
       console.log('dados informados pelo user:', data)
 
       try {
-          await axios.post("http://127.0.0.1:8000/api/tarefas/", data);
+          await axios.post("http://127.0.0.1:8000/api/tarefas/  ", data);
           alert("Tarefa cadastrada com sucesso");
           reset();
       } catch (error) {
@@ -79,23 +79,23 @@ export function CadTarefa() {
 
         <label>Prioridade:</label>
         <select {...register("prioridade")}>
-          <option value="1">Baixa</option>
-          <option value="2">Média</option>
-          <option value="3">Alta</option>
-        </select>
+          <option value="low">Baixa</option>
+          <option value="medium">Média</option>
+          <option value="high">Alta</option>
+        </select> 
         {errors.prioridade && <span className='errors'>{errors.prioridade.message}</span>}
 
         <label>Status:</label>
         <select {...register("status")}>
-          <option value="1">Pendente</option>
-          <option value="2">Em Progresso</option>
-          <option value="3">Concluída</option>
+          <option value="pending">Pendente</option>
+          <option value="in_progress">Em Progresso</option>
+          <option value="completed">Concluída</option>
         </select>
         {errors.status && <span className='errors'>{errors.status.message}</span>}
 
         <label>Usuário:</label>
-        <input type="text" placeholder='Digite o ID do usuário' {...register("usuario")} />
-        {errors.usuario && <span className='errors'>{errors.usuario.message}</span>}
+        <input type="text" placeholder='Digite o ID do usuário' {...register("id_usuario")} />
+        {errors.id_usuario && <span className='errors'>{errors.id_usuario.message}</span>}
 
         <button type="submit">Cadastrar </button>
       </form>
