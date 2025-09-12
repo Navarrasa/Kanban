@@ -31,13 +31,13 @@ export function Board() {
     const tarefasFeito = tarefas.filter(tarefa => tarefa.status === 'completed');
 
     return (
-        <main className="container">
+        <section className="container">
             <h1>Meu Quadro</h1>
             <section className="columns-wrapper">
-            <Columns titulo="A fazer" tarefas={tarefasAfazer} />
-            <Columns titulo="Fazendo" tarefas={tarefasFazendo} />
-            <Columns titulo="Feito" tarefas={tarefasFeito} />
+                <Columns titulo="A fazer" tarefas={tarefasAfazer} />
+                <Columns titulo="Fazendo" tarefas={tarefasFazendo} />
+                <Columns titulo="Feito" tarefas={tarefasFeito} />
             </section>
-        </main>
+        </section>
     );
 }

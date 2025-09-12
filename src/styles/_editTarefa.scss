@@ -1,0 +1,91 @@
+@use './var' as *;
+
+// Estilos do componente editar tarefa
+.editar-tarefa-card {
+  background-color: $background;
+  color: $text-background;
+  font-family: $font-primary;
+  font-size: $font-size;
+  width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: $accent;
+    text-align: center;
+  }
+
+  .editar-tarefa-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    label {
+      font-weight: bold;
+      color: $primary;
+    }
+
+    textarea,
+    input,
+    select {
+      padding: 0.8rem;
+      border: 1px solid lighten($secondary, 20%);
+      border-radius: 5px;
+      font-size: 1rem;
+      background-color: white;
+      color: $primary;
+      transition: border 0.3s ease;
+
+      &:focus {
+        border-color: $accent;
+        outline: none;
+      }
+
+      &:read-only {
+        background-color: #e9ecef;
+        color: darken($secondary, 20%);
+      }
+    }
+
+    .editar-tarefa-error {
+      color: red;
+      font-size: 0.85rem;
+      margin-top: -0.5rem;
+    }
+
+    .editar-tarefa-btn {
+      margin-top: 1rem;
+      padding: 0.8rem 1.2rem;
+      background-color: $button;
+      font-weight: 600;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($button, 10%);
+      }
+    }
+    .cancelar-tarefa-btn {
+      margin-top: 0.5rem;
+      padding: 0.8rem 1.2rem;
+      background-color: $secondary;
+      font-weight: 600;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($secondary, 10%);
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { Tarefa } from "../../components/Tarefa/Tarefa";
 
 export function Columns({ titulo, tarefas = []}) {
     return(
-        <section className="coluna">
+        <section className="column">
             <h2 className="titulo">{titulo}</h2>
             {tarefas.map(tarefa => {
                 console.log("Renderizando", tarefa);

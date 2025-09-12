@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 export function Header() {
   return (
     <header className="header">
-      <h1><Link to="/">Gerenciar Tarefas</Link></h1>
+      <h1>
+        <Link to="/">Gerenciar Tarefas</Link>
+      </h1>
       <nav>
         <ul>
           <li>
@@ -11,9 +13,6 @@ export function Header() {
           </li>
           <li>
             <Link to="/tasks">Cadastro de Tarefas</Link>
-          </li>
-          <li>
-            <Link to="/manage/tasks">Gerenciamento de Tarefas</Link>
           </li>
         </ul>
       </nav>
