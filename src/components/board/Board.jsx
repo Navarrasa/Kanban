@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Columns } from '../Columns/Columns';
 
+
 export function Board() {
     
     const [tarefas, setTarefas] = useState([]);
