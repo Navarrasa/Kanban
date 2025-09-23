@@ -1,13 +1,22 @@
 import { Tarefa } from "../../components/Tarefa/Tarefa"; 
+import { useDroppable } from "@dnd-kit/core";
 
-export function Columns({ titulo, tarefas = []}) {
-    return(
-        <section className="column">
-            <h2 className="titulo">{titulo}</h2>
-            {tarefas.map(tarefa => {
-                console.log("Renderizando", tarefa);
-                return<Tarefa key={tarefa.id} tarefa={tarefa} />
-            })}
-        </section>
-    );
+export function Columns({ id, titulo, tarefas }) {
+  const { setNodeRef } = useDroppable({ id });
+
+  return (
+    // Considerar usar uma região landmark ou section para melhor organização semântica
+    <section 
+      ref={setNodeRef} 
+      className="column" 
+      aria-labelledby={`column-${id}-title`}  // Liga o título como label da região
+      role="region"  // Define uma região semântica para leitores de tela (opcional)
+    >
+      {/* Título com id para referenciar na aria-labelledby */}
+      <h2 id={`column-${id}-title`}>{titulo}</h2>
+      {tarefas.map((tarefa) => (
+        <Tarefa key={tarefa.id} tarefa={tarefa} />
+      ))}
+    </section>
+  );
 }

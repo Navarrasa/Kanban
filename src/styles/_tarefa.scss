@@ -1,5 +1,6 @@
 @use './var' as *;
 
+/* Card de tarefa */
 .tarefa-card {
   background: $background;
   border: 1px solid rgba($secondary, 0.3);
@@ -18,13 +19,43 @@
     box-shadow: 0 10px 20px rgba($primary, 0.15);
   }
 
-  h3 {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: $primary;
-    margin-bottom: 0.5rem;
+  /* Cabeçalho do card: título + handle de arraste */
+  .tarefa-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: $primary;
+      margin: 0; // remove espaço extra
+    }
+
+    /* Bolinha de arraste acessível */
+    .drag-handle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      cursor: grab;
+      flex-shrink: 0;
+      transition: background 0.2s ease;
+
+      &:hover {
+        scale: 1.2;
+      }
+
+      &:active {
+        cursor: grabbing;
+        background: rgba($secondary, 0.9);
+      }
+    }
   }
 
+  /* Título secundário (se precisar em outros contextos) */
   h2 {
     font-size: 1.5rem;
     font-weight: 700;
@@ -32,6 +63,7 @@
     margin-bottom: 0.75rem;
   }
 
+  /* Lista de detalhes (Setor, etc) */
   dl {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -47,6 +79,7 @@
     }
   }
 
+  /* Botões de ação (Editar / Excluir) */
   .tarefa-actions {
     display: flex;
     gap: 0.75rem;
@@ -71,7 +104,7 @@
         transform: scale(0.96);
       }
 
-      // Ripple effect
+      /* Efeito ripple */
       &::after {
         content: "";
         position: absolute;
@@ -111,6 +144,7 @@
     }
   }
 
+  /* Formulário de status */
   .tarefa-status {
     display: flex;
     align-items: center;
@@ -122,7 +156,9 @@
       color: $primary;
     }
 
-    input {
+    input,
+    textarea,
+    select {
       padding: 0.4rem 0.6rem;
       border-radius: 8px;
       border: 1px solid rgba($secondary, 0.4);
@@ -137,34 +173,13 @@
     }
 
     textarea {
-      padding: 0.4rem 0.6rem;
-      border-radius: 8px;
-      border: 1px solid rgba($secondary, 0.4);
-      font-family: $font-primary;
       font-size: 1rem;
       min-height: 80px;
       resize: vertical;
-      transition: border 0.2s ease;
-
-      &:focus {
-        border-color: $primary;
-        outline: none;
-        box-shadow: 0 0 0 3px rgba($primary, 0.2);
-      }
     }
 
     select {
-      padding: 0.4rem 0.6rem;
-      border-radius: 8px;
-      border: 1px solid rgba($secondary, 0.4);
-      font-family: $font-primary;
-      transition: border 0.2s ease;
-
-      &:focus {
-        border-color: $primary;
-        outline: none;
-        box-shadow: 0 0 0 3px rgba($primary, 0.2);
-      }
+      background: #fff;
     }
 
     .btn.status {
@@ -181,9 +196,40 @@
   }
 }
 
+/* Estilo de lista de detalhes */
 .tarefa-details {
   display: flex;
   font-weight: bold;
   color: $primary;
   gap: 0.75rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .tarefa-card {
+    padding: 1rem;
+
+    .tarefa-header h3 {
+      font-size: 1.1rem;
+    }
+
+    .tarefa-actions {
+      flex-direction: column;
+      align-items: stretch;
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    .tarefa-status {
+      flex-direction: column;
+      align-items: stretch;
+
+      select,
+      .btn.status {
+        width: 100%;
+      }
+    }
+  }
 }

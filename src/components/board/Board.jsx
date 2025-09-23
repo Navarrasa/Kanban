@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Columns } from '../Columns/Columns';
-
+import { DndContext } from '@dnd-kit/core';
 
 export function Board() {
     
@@ -26,19 +26,50 @@ export function Board() {
             });
     }, [])
 
+    function handleDragEnd(event){
+        const {active, over} = event;
+
+        if(over && active){
+            const tarefaId = active.id //pegar o id da tarefa qeu ta sofrendo o evento¨
+            const novaColuna = over.id // quero pegar a coluna da tarefa
+
+            //atualiza a interface do usuário
+            setTarefas(prev => {
+                return prev.map(tarefa => tarefa.id === tarefaId ? { ...tarefa, status: novaColuna } : tarefa);
+            })
+ 
+            //atualiza o status do card (muda a situação do card : a fazer/fazendo/fronto)
+ 
+            axios.patch(`http://127.0.0.1:8000/api/tarefas/${tarefaId}/`, {
+                status: novaColuna
+            })
+            .catch(err => console.error("Erro ao atualizar status: ", err));
+        }
+    }
+ 
+
     //armazenando em variáveis o resultado de uma função callback que procura tarefas com um certo status
     const tarefasAfazer = tarefas.filter(tarefa => tarefa.status === 'pending');
     const tarefasFazendo = tarefas.filter(tarefa => tarefa.status === 'in_progress');
     const tarefasFeito = tarefas.filter(tarefa => tarefa.status === 'completed');
 
     return (
-        <section className="container">
+        <DndContext onDragEnd={handleDragEnd}>
+            <section className="container" aria-label="Quadro de tarefas">
             <h1>Meu Quadro</h1>
-            <section className="columns-wrapper">
-                <Columns titulo="A fazer" tarefas={tarefasAfazer} />
-                <Columns titulo="Fazendo" tarefas={tarefasFazendo} />
-                <Columns titulo="Feito" tarefas={tarefasFeito} />
+
+            {/* Wrapping columns in a landmark region para ajudar na navegação */}
+            <section
+                className="columns-wrapper"
+                role="list"  // Indica que esta seção contém uma lista de itens
+                aria-label="Colunas de tarefas"
+            >
+                {/* Cada Columns deve representar uma lista de itens */}
+                <Columns id="pending" titulo="A fazer" tarefas={tarefasAfazer} />
+                <Columns id="in_progress" titulo="Fazendo" tarefas={tarefasFazendo} />
+                <Columns id="completed" titulo="Feito" tarefas={tarefasFeito} />
             </section>
-        </section>
+            </section>
+        </DndContext>
     );
 }
