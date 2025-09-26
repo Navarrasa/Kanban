@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Columns } from '../Columns/Columns';
 import { DndContext } from '@dnd-kit/core';
+import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 
 export function Board() {
     
@@ -54,7 +55,7 @@ export function Board() {
     const tarefasFeito = tarefas.filter(tarefa => tarefa.status === 'completed');
 
     return (
-        <DndContext onDragEnd={handleDragEnd}>
+        <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToFirstScrollableAncestor]}>
             <section className="container" aria-label="Quadro de tarefas">
             <h1>Meu Quadro</h1>
 

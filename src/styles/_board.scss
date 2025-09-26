@@ -6,6 +6,8 @@
     padding: 2rem;
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
     gap: 1rem;
     background-color: $secondary;
 
