@@ -9,8 +9,6 @@ export function Columns({ id, titulo, tarefas }) {
     <section 
       ref={setNodeRef} 
       className="column" 
-      aria-labelledby={`column-${id}-title`}  // Liga o título como label da região
-      role="region"  // Define uma região semântica para leitores de tela (opcional)
     >
       {/* Título com id para referenciar na aria-labelledby */}
       <h2 id={`column-${id}-title`}>{titulo}</h2>

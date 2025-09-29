@@ -58,7 +58,7 @@ export function EditarTarefa() {
       navigate("/"); // Redireciona para a página inicial após salvar
     } catch (error) {
       console.error("Erro ao atualizar tarefa:", error);
-      alert("Erro ao atualizar a tarefa. Tente novamente.");
+      alert("Erro ao atualizar a tarefa. Verifique as informações e tente novamente.");
     }
   }
 
@@ -96,7 +96,8 @@ export function EditarTarefa() {
         {/* Campo de seleção para prioridade com tratamento de erro */}
         <label htmlFor="prioridade">Prioridade</label>
         <select 
-          id="prioridade" 
+          id="prioridade"
+          className="active_select" 
           {...register("prioridade")} 
           aria-invalid={errors.prioridade ? "true" : "false"} // indica se o campo está inválido
         >
@@ -113,7 +114,8 @@ export function EditarTarefa() {
         {/* Campo de seleção para status com tratamento de erro */}
         <label htmlFor="status">Status</label>
         <select 
-          id="status" 
+          id="status"
+          className="active_select" 
           {...register("status")} 
           aria-invalid={errors.status ? "true" : "false"}
         >

@@ -10,6 +10,7 @@ export function CadUsuario() {
     nome: z.string()
       .min(1, 'Insira ao menos 1 caractere')
       .max(30, 'Insira até 30 caracteres')
+      .trim()
       .regex(/^(?!\s*$).+/, "Nome não pode estar em branco")
       .regex(/^(?!\d+$).*/, "Nome não pode ser apenas números")
       .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/, "Use apenas letras e espaços"),
@@ -41,7 +42,7 @@ export function CadUsuario() {
       alert("Usuário cadastrado com sucesso");
       reset(); // limpa o formulário após sucesso
     } catch (error) {
-      alert("Éeee, não rolou, na proxima talvez")
+      alert("Erro ao cadastrar usuário. e-mail já cadastrado");
       console.log("Erros", error)
     }
   }

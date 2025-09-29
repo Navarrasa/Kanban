@@ -9,7 +9,7 @@
   box-shadow: 0 6px 14px rgba($primary, 0.12);
   font-family: $font-primary;
   font-size: $font-size;
-  color: $text-background;
+  color: $text-background;    
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -59,7 +59,6 @@
   h2 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: $primary;
     margin-bottom: 0.75rem;
   }
 
@@ -68,15 +67,6 @@
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0.25rem 0.75rem;
-
-    dt {
-      font-weight: 600;
-      color: $primary;
-    }
-
-    dd {
-      color: $secondary;
-    }
   }
 
   /* Botões de ação (Editar / Excluir) */
@@ -184,6 +174,7 @@
 
     .btn.status {
       background: $button;
+      color: white;
       padding: 0.6rem 1.2rem;
       border-radius: 10px;
       font-weight: 600;

@@ -11,7 +11,7 @@
     text-decoration: none;
     
     h1 {
-        font-size: 1.5rem;
+        font-size: 2rem;
 
         a{
             color: $text-primary;
@@ -24,6 +24,7 @@
     }
 
     nav {
+        font-size: 1.5rem;
         ul {
             list-style: none;
             padding: 0;
@@ -31,6 +32,7 @@
             li {
                 display: inline;
                 margin-right: 1rem;
+                padding: 10px;
 
                 a {
                     color: $text-primary;

@@ -1,10 +1,12 @@
+import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 
 export function CadTarefa() {
-  // Schema de validação para a tarefa usando Zod
+  
+  // Schema de validação
   const schemaCadTarefa = z.object({
     descricao: z.string()
       .min(1, "Insira uma descrição")
@@ -12,36 +14,26 @@ export function CadTarefa() {
       .regex(/^(?!\d+$).*/, "Descrição não pode ser apenas números")
       .regex(/^(?![^\w\s]+$).*/, "Descrição não pode ser apenas símbolos")
       .regex(/^(?!\s*$).+/, "Descrição não pode estar em branco"),
-
     nome_setor: z.string()
       .min(1, "Insira o nome do setor")
-      .max(30, "Nome do setor deve ter até 30 caracteres")
+      .max(20, "Nome do setor deve ter até 20 caracteres")
+      .trim()
       .regex(/^(?!\d+$).*/, "Nome do setor não pode ser apenas números")
       .regex(/^(?![^\w\s]+$).*/, "Nome do setor não pode ser apenas símbolos")
       .regex(/^(?!\s*$).+/, "Nome do setor não pode estar em branco"),
-
-    prioridade: z.enum(['low', 'medium', 'high'], {
-      errorMap: () => ({ message: "Selecione uma prioridade" })
-    }).default('low'),
-
-    status: z.enum(['pending', 'in_progress', 'completed'], {
-      errorMap: () => ({ message: "Selecione um status" })
-    }).default('pending'),
-
+    prioridade: z.enum(['low', 'medium', 'high'], { errorMap: () => ({ message: "Selecione uma prioridade" }) }).default('low'),
+    status: z.enum(['pending', 'in_progress', 'completed'], { errorMap: () => ({ message: "Selecione um status" }) }).default('pending'),
     id_usuario: z.string()
-      .min(1, "Insira ID do usuário")
+      .min(1, "Selecione um usuário")
       .max(100, "ID do usuário deve ter até 100 caracteres")
-      .regex(/^(?![^\w\s]+$).*/, "ID do usuário não pode ser apenas símbolos")
-      .regex(/^(?!\s*$).+/, "ID do usuário não pode estar em branco"),
   });
 
-  // Configuração do react-hook-form com validação do schema
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset
-  } = useForm({
+
+  const [usuarios, setUsuarios] = useState([]);
+  const [nomeUsuario, setNomeUsuario] = useState("");
+
+
+  const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
     resolver: zodResolver(schemaCadTarefa),
     defaultValues: {
       prioridade: "low",
@@ -49,42 +41,55 @@ export function CadTarefa() {
     }
   });
 
-  // Função para enviar os dados para a API ao submeter o formulário
-  async function obterdados(data) {
-    console.log('dados informados pelo user:', data);
 
+  // Busca todos os usuários ao montar o componente
+  useEffect(() => {
+    async function fetchUsuarios() {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/usuarios/");
+        setUsuarios(response.data); // Espera um array de {id, nome}
+      } catch (err) {
+        console.error("Erro ao buscar usuários", err);
+        setUsuarios([]);
+      }
+    }
+    fetchUsuarios();
+  }, []);
+
+  
+  // Atualiza o nome do usuário selecionado
+  useEffect(() => {
+    const selectedId = watch("id_usuario");
+    const usuarioSelecionado = usuarios.find(u => u.id === selectedId);
+    setNomeUsuario(usuarioSelecionado ? usuarioSelecionado.nome : "");
+  }, [watch("id_usuario"), usuarios]);
+
+
+  // Submissão do formulário
+  async function obterdados(data) {
     try {
-      // Atenção: tinha um espaço extra na URL que removi
       await axios.post("http://127.0.0.1:8000/api/tarefas/", data);
       alert("Tarefa cadastrada com sucesso");
-      reset(); // limpa formulário após cadastro bem-sucedido
+      reset();
     } catch (error) {
-      alert("Éeee, não rolou, na próxima talvez");
-      console.log("Erros", error);
+      alert("Ocorreu um erro ao cadastrar a tarefa. Tente novamente.");
+      console.error("Erro ao cadastrar tarefa:", error);
     }
   }
 
+  // Renderiza o formulário
   return (
-    // Usa section com aria-labelledby para ajudar leitores de tela
-    <section className="section" aria-labelledby="cad-tarefa-title">
+    <section className="section">
       <form className='formularios' onSubmit={handleSubmit(obterdados)} noValidate>
         <h2 id="cad-tarefa-title">Dados da Tarefa</h2>
 
-        {/* LABELS associados aos inputs via htmlFor e id */}
         <label htmlFor="descricao">Descrição:</label>
-        <input
-          type="text"
+        <textarea
           id="descricao"
           placeholder='Digite a descrição da tarefa'
           {...register("descricao")}
-          aria-invalid={errors.descricao ? "true" : "false"}
-          aria-describedby={errors.descricao ? "descricao-error" : undefined}
         />
-        {errors.descricao && (
-          <span role="alert" id="descricao-error" className='errors'>
-            {errors.descricao.message}
-          </span>
-        )}
+        {errors.descricao && <span role="alert" className='errors'>{errors.descricao.message}</span>}
 
         <label htmlFor="nome_setor">Nome do Setor:</label>
         <input
@@ -92,63 +97,36 @@ export function CadTarefa() {
           id="nome_setor"
           placeholder='Digite o nome do setor'
           {...register("nome_setor")}
-          aria-invalid={errors.nome_setor ? "true" : "false"}
-          aria-describedby={errors.nome_setor ? "nome_setor-error" : undefined}
         />
-        {errors.nome_setor && (
-          <span role="alert" id="nome_setor-error" className='errors'>
-            {errors.nome_setor.message}
-          </span>
-        )}
+        {errors.nome_setor && <span role="alert" className='errors'>{errors.nome_setor.message}</span>}
 
         <label htmlFor="prioridade">Prioridade:</label>
-        <select
-          id="prioridade"
-          {...register("prioridade")}
-          aria-invalid={errors.prioridade ? "true" : "false"}
-          aria-describedby={errors.prioridade ? "prioridade-error" : undefined}
-        >
+        <select id="prioridade" {...register("prioridade")}>
           <option value="low">Baixa</option>
           <option value="medium">Média</option>
           <option value="high">Alta</option>
         </select>
-        {errors.prioridade && (
-          <span role="alert" id="prioridade-error" className='errors'>
-            {errors.prioridade.message}
-          </span>
-        )}
+        {errors.prioridade && <span role="alert" className='errors'>{errors.prioridade.message}</span>}
 
         <label htmlFor="status">Status:</label>
-        <select
-          id="status"
-          {...register("status")}
-          aria-invalid={errors.status ? "true" : "false"}
-          aria-describedby={errors.status ? "status-error" : undefined}
-        >
+        <select id="status" {...register("status")}>
           <option value="pending">Pendente</option>
-          <option value="in_progress">Em Progresso</option>
-          <option value="completed">Concluída</option>
         </select>
-        {errors.status && (
-          <span role="alert" id="status-error" className='errors'>
-            {errors.status.message}
-          </span>
-        )}
+        {errors.status && <span role="alert" className='errors'>{errors.status.message}</span>}
 
         <label htmlFor="id_usuario">Usuário:</label>
-        <input
-          type="text"
-          id="id_usuario"
-          placeholder='Digite o ID do usuário'
-          {...register("id_usuario")}
-          aria-invalid={errors.id_usuario ? "true" : "false"}
-          aria-describedby={errors.id_usuario ? "id_usuario-error" : undefined}
-        />
-        {errors.id_usuario && (
-          <span role="alert" id="id_usuario-error" className='errors'>
-            {errors.id_usuario.message}
-          </span>
-        )}
+        <select id="id_usuario" {...register("id_usuario")}>
+          <option value="">Selecione um usuário</option>
+          {usuarios.map(usuario => (
+            <option key={usuario.id} value={usuario.id}>
+              {usuario.nome}
+            </option>
+          ))}
+        </select>
+        {errors.id_usuario && <span role="alert" className='errors'>{errors.id_usuario.message}</span>}
+
+        {/* Mostrar nome do usuário selecionado */}
+        {nomeUsuario && <p>Selecionado: {nomeUsuario}</p>}
 
         <button type="submit">Cadastrar</button>
       </form>

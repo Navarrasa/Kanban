@@ -10,6 +10,7 @@
     flex-direction: column;
     gap:1rem;
     justify-content: center ;
+    overflow-x: hidden;
  
     h2{
         text-align: center;
@@ -30,6 +31,15 @@
             border: 1px solid $primary;
             border-radius: 8px;
             font-size: 16px;
+        }
+        textarea{
+            padding: 20px;
+            border: 1px solid $primary;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: none;
+            width: 100%;
+
         }
         select{
             padding: 10px;

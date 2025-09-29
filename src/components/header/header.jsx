@@ -11,11 +11,11 @@ export function Header() {  // Componente Header, responsável pela navegação 
         <ul>  {/* Lista de navegação */}
           <li>
             {/* Link para a página de cadastro de usuários */}
-            <Link to="/users">Cadastro de Usuários</Link>
+            <Link to="/users">Usuários</Link>
           </li>
           <li>
             {/* Link para a página de cadastro de tarefas */}
-            <Link to="/tasks">Cadastro de Tarefas</Link>
+            <Link to="/tasks">Tarefas</Link>
           </li>
         </ul>
       </nav>

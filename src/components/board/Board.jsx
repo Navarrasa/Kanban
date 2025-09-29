@@ -53,6 +53,7 @@ export function Board() {
     const tarefasAfazer = tarefas.filter(tarefa => tarefa.status === 'pending');
     const tarefasFazendo = tarefas.filter(tarefa => tarefa.status === 'in_progress');
     const tarefasFeito = tarefas.filter(tarefa => tarefa.status === 'completed');
+    console.log(tarefas );
 
     return (
         <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToFirstScrollableAncestor]}>
@@ -62,7 +63,6 @@ export function Board() {
             {/* Wrapping columns in a landmark region para ajudar na navegação */}
             <section
                 className="columns-wrapper"
-                role="list"  // Indica que esta seção contém uma lista de itens
                 aria-label="Colunas de tarefas"
             >
                 {/* Cada Columns deve representar uma lista de itens */}

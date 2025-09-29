@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use './var' as *;
 
 // Estilos do componente editar tarefa
@@ -11,7 +12,11 @@
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
+  
+  textarea {
+    resize: none;
+  }
+  
   h2 {
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
@@ -33,7 +38,8 @@
     input,
     select {
       padding: 0.8rem;
-      border: 1px solid lighten($secondary, 20%);
+      // antigo: border: 1px solid lighten($secondary, 20%);
+      border: 1px solid color.adjust($secondary, $lightness: +20%);
       border-radius: 5px;
       font-size: 1rem;
       background-color: white;
@@ -47,7 +53,8 @@
 
       &:read-only {
         background-color: #e9ecef;
-        color: darken($secondary, 20%);
+        // antigo: color: darken($secondary, 20%);
+        color: color.adjust($secondary, $lightness: -20%);
       }
     }
 
@@ -61,6 +68,7 @@
       margin-top: 1rem;
       padding: 0.8rem 1.2rem;
       background-color: $button;
+      color: #FFF;
       font-weight: 600;
       border: none;
       border-radius: 5px;
@@ -69,9 +77,11 @@
       transition: background-color 0.3s ease;
 
       &:hover {
-        background-color: darken($button, 10%);
+        // antigo: background-color: darken($button, 10%);
+        background-color: color.adjust($button, $lightness: -10%);
       }
     }
+
     .cancelar-tarefa-btn {
       margin-top: 0.5rem;
       padding: 0.8rem 1.2rem;
@@ -84,8 +94,15 @@
       transition: background-color 0.3s ease;
 
       &:hover {
-        background-color: darken($secondary, 10%);
+        // antigo: background-color: darken($secondary, 10%);
+        background-color: color.adjust($secondary, $lightness: -10%);
       }
     }
   }
+}
+
+.active_select{    
+  border: 1px solid color.adjust($secondary, $lightness: +30%) !important;
+  background-color: rgb(218, 218, 218) !important;
+  color: black !important;
 }

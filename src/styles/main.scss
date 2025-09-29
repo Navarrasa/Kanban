@@ -10,8 +10,7 @@
 
 html, body {
   height: 100%;
-  overflow-x: hidden; /* nunca cria scroll horizontal */
-  overflow-y: hidden; /* evita scroll vertical ao arrastar */
+  overflow-x: hidden; 
 }
 
 .main{
