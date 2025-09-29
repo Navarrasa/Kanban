@@ -24,7 +24,7 @@ export function Tarefa({ tarefa }) {
   const style = transform
     ? { transform: `translate(${transform.x}px, ${transform.y}px)` }
     : undefined;
-
+  console.log(tarefa);
   // Busca o nome do usuário ao montar o componente ou quando muda o id do usuário
   useEffect(() => {
     async function fetchNome() {
@@ -144,9 +144,9 @@ export function Tarefa({ tarefa }) {
           aria-labelledby={`tarefa-${tarefa.id}`}
         >
           <option value="">Selecione</option>
-          <option value="pending">A Fazer</option>
-          <option value="in_progress">Fazendo</option>
-          <option value="completed">Feito</option>
+          <option value="pendente">A Fazer</option>
+          <option value="em_andamento">Fazendo</option>
+          <option value="concluido">Feito</option>
         </select>
         <button
           type="submit"

@@ -50,9 +50,9 @@ export function Board() {
  
 
     //armazenando em variáveis o resultado de uma função callback que procura tarefas com um certo status
-    const tarefasAfazer = tarefas.filter(tarefa => tarefa.status === 'pending');
-    const tarefasFazendo = tarefas.filter(tarefa => tarefa.status === 'in_progress');
-    const tarefasFeito = tarefas.filter(tarefa => tarefa.status === 'completed');
+    const tarefasAfazer = tarefas.filter(tarefa => tarefa.status === 'pendente');
+    const tarefasFazendo = tarefas.filter(tarefa => tarefa.status === 'em_andamento');
+    const tarefasFeito = tarefas.filter(tarefa => tarefa.status === 'concluido');
     console.log(tarefas );
 
     return (
@@ -66,9 +66,9 @@ export function Board() {
                 aria-label="Colunas de tarefas"
             >
                 {/* Cada Columns deve representar uma lista de itens */}
-                <Columns id="pending" titulo="A fazer" tarefas={tarefasAfazer} />
-                <Columns id="in_progress" titulo="Fazendo" tarefas={tarefasFazendo} />
-                <Columns id="completed" titulo="Feito" tarefas={tarefasFeito} />
+                <Columns id="pendente" titulo="A fazer" tarefas={tarefasAfazer} />
+                <Columns id="em_andamento" titulo="Fazendo" tarefas={tarefasFazendo} />
+                <Columns id="concluido" titulo="Feito" tarefas={tarefasFeito} />
             </section>
             </section>
         </DndContext>

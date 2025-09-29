@@ -11,7 +11,7 @@ export function Columns({ id, titulo, tarefas }) {
       className="column" 
     >
       {/* Título com id para referenciar na aria-labelledby */}
-      <h2 id={`column-${id}-title`}>{titulo}</h2>
+      <h2 id={`coluna-${id}`}>{titulo}</h2>
       {tarefas.map((tarefa) => (
         <Tarefa key={tarefa.id} tarefa={tarefa} />
       ))}

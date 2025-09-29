@@ -21,8 +21,8 @@ export function CadTarefa() {
       .regex(/^(?!\d+$).*/, "Nome do setor não pode ser apenas números")
       .regex(/^(?![^\w\s]+$).*/, "Nome do setor não pode ser apenas símbolos")
       .regex(/^(?!\s*$).+/, "Nome do setor não pode estar em branco"),
-    prioridade: z.enum(['low', 'medium', 'high'], { errorMap: () => ({ message: "Selecione uma prioridade" }) }).default('low'),
-    status: z.enum(['pending', 'in_progress', 'completed'], { errorMap: () => ({ message: "Selecione um status" }) }).default('pending'),
+    prioridade: z.enum(['baixo', 'medio', 'alto'], { errorMap: () => ({ message: "Selecione uma prioridade" }) }).default('baixo'),
+    status: z.enum(['pendente', 'em_andamento', 'concluido'], { errorMap: () => ({ message: "Selecione um status" }) }).default('pendente'),
     id_usuario: z.string()
       .min(1, "Selecione um usuário")
       .max(100, "ID do usuário deve ter até 100 caracteres")
@@ -36,8 +36,8 @@ export function CadTarefa() {
   const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
     resolver: zodResolver(schemaCadTarefa),
     defaultValues: {
-      prioridade: "low",
-      status: "pending"
+      prioridade: "baixo",
+      status: "pendente"
     }
   });
 
@@ -102,15 +102,15 @@ export function CadTarefa() {
 
         <label htmlFor="prioridade">Prioridade:</label>
         <select id="prioridade" {...register("prioridade")}>
-          <option value="low">Baixa</option>
-          <option value="medium">Média</option>
-          <option value="high">Alta</option>
+          <option value="baixo">Baixa</option>
+          <option value="medio">Média</option>
+          <option value="alto">Alta</option>
         </select>
         {errors.prioridade && <span role="alert" className='errors'>{errors.prioridade.message}</span>}
 
         <label htmlFor="status">Status:</label>
         <select id="status" {...register("status")}>
-          <option value="pending">Pendente</option>
+          <option value="pendente">Pendente</option>
         </select>
         {errors.status && <span role="alert" className='errors'>{errors.status.message}</span>}
 

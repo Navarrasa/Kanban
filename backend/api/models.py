@@ -1,15 +1,15 @@
 from django.db import models
 
 PRIORITY_CHOICES = [
-    ('low', 'Low'),
-    ('medium', 'Medium'),
-    ('high', 'High'),
+    ('baixo', 'Baixo'),
+    ('medio', 'Médio'),
+    ('alto', 'Alto'),
 ]
 
 STATUS_CHOICES = [
-    ('pending', 'Pending'),
-    ('in_progress', 'In Progress'),
-    ('completed', 'Completed'),
+    ('pendente', 'Pendente'),
+    ('em_andamento', 'Em Andamento'),
+    ('concluido', 'Concluído'),
 ]
 
 class Usuario(models.Model):
