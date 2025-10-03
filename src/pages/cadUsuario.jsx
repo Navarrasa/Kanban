@@ -84,7 +84,7 @@ export function CadUsuario() {
           </span>
         )}
 
-        <button type="submit">Cadastrar</button>
+        <button type="submit" name='cadastrar'>Cadastrar</button>
       </form>
     </section>
   );
