@@ -25,7 +25,9 @@ export function CadTarefa() {
     status: z.enum(['pendente', 'em_andamento', 'concluido'], { errorMap: () => ({ message: "Selecione um status" }) }).default('pendente'),
     id_usuario: z.string()
       .min(1, "Selecione um usuário")
-      .max(100, "ID do usuário deve ter até 100 caracteres")
+      .max(10, "ID do usuário deve ter até 10 caracteres")
+      .regex(/^(?![^\w\s]+$).*/, "ID do usuário não pode ser apenas símbolos")
+      .regex(/^(?!\s*$).+/, "ID do usuário não pode estar em branco"),
   });
 
 

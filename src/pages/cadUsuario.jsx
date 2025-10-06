@@ -17,7 +17,7 @@
 
       email: z.string()
         .min(5, 'Insira ao menos 5 caracteres')
-        .max(100, 'Insira até 100 caracteres')
+        .max(40, 'Insira até 40 caracteres')
         .trim()
         .email("Formato de email inválido")
         .regex(/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/, "Insira um domínio válido"),
