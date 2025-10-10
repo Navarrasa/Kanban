@@ -81,57 +81,72 @@ export function CadTarefa() {
 
   // Renderiza o formulário
   return (
-    <section className="section">
-      <form className='formularios' onSubmit={handleSubmit(obterdados)} noValidate>
-        <h2 id="cad-tarefa-title">Dados da Tarefa</h2>
+  <section className="section">
+    <form className='formularios' onSubmit={handleSubmit(obterdados)} noValidate>
+      <h2 id="cad-tarefa-title">Dados da Tarefa</h2>
 
-        <label htmlFor="descricao">Descrição:</label>
-        <textarea
-          id="descricao"
-          placeholder='Digite a descrição da tarefa'
-          {...register("descricao")}
-        />
-        {errors.descricao && <span role="alert" className='errors'>{errors.descricao.message}</span>}
+      <label htmlFor="descricao">Descrição:</label>
+      <textarea
+        id="descricao"
+        placeholder='Digite a descrição da tarefa'
+        className={errors.descricao ? 'errors' : ''}
+        {...register("descricao")}
+      />
+      {errors.descricao && <span role="alert" className='errors'>{errors.descricao.message}</span>}
 
-        <label htmlFor="nome_setor">Nome do Setor:</label>
-        <input
-          type="text"
-          id="nome_setor"
-          placeholder='Digite o nome do setor'
-          {...register("nome_setor")}
-        />
-        {errors.nome_setor && <span role="alert" className='errors'>{errors.nome_setor.message}</span>}
+      <label htmlFor="nome_setor">Nome do Setor:</label>
+      <input
+        type="text"
+        id="nome_setor"
+        placeholder='Digite o nome do setor'
+        className={errors.nome_setor ? 'errors' : ''}
+        {...register("nome_setor")}
+      />
+      {errors.nome_setor && <span role="alert" className='errors'>{errors.nome_setor.message}</span>}
 
-        <label htmlFor="prioridade">Prioridade:</label>
-        <select id="prioridade" {...register("prioridade")}>
-          <option value="baixo">Baixa</option>
-          <option value="medio">Média</option>
-          <option value="alto">Alta</option>
-        </select>
-        {errors.prioridade && <span role="alert" className='errors'>{errors.prioridade.message}</span>}
+      <label htmlFor="prioridade">Prioridade:</label>
+      <select
+        id="prioridade"
+        className={errors.prioridade ? 'errors' : ''}
+        {...register("prioridade")}
+      >
+        <option value="baixo">Baixa</option>
+        <option value="medio">Média</option>
+        <option value="alto">Alta</option>
+      </select>
+      {errors.prioridade && <span role="alert" className='errors'>{errors.prioridade.message}</span>}
 
-        <label htmlFor="status">Status:</label>
-        <select id="status" {...register("status")}>
-          <option value="pendente">Pendente</option>
-        </select>
-        {errors.status && <span role="alert" className='errors'>{errors.status.message}</span>}
+      <label htmlFor="status">Status:</label>
+      <select
+        id="status"
+        className={errors.status ? 'errors' : ''}
+        {...register("status")}
+      >
+        <option value="pendente">Pendente</option>
+      </select>
+      {errors.status && <span role="alert" className='errors'>{errors.status.message}</span>}
 
-        <label htmlFor="id_usuario">Usuário:</label>
-        <select id="id_usuario" {...register("id_usuario")}>
-          <option value="">Selecione um usuário</option>
-          {usuarios.map(usuario => (
-            <option key={usuario.id} value={usuario.id}>
-              {usuario.nome}
-            </option>
-          ))}
-        </select>
-        {errors.id_usuario && <span role="alert" className='errors'>{errors.id_usuario.message}</span>}
+      <label htmlFor="id_usuario">Usuário:</label>
+      <select
+        id="id_usuario"
+        className={errors.id_usuario ? 'errors' : ''}
+        {...register("id_usuario")}
+      >
+        <option value="">Selecione um usuário</option>
+        {usuarios.map(usuario => (
+          <option key={usuario.id} value={usuario.id}>
+            {usuario.nome}
+          </option>
+        ))}
+      </select>
+      {errors.id_usuario && <span role="alert" className='errors'>{errors.id_usuario.message}</span>}
 
-        {/* Mostrar nome do usuário selecionado */}
-        {nomeUsuario && <p>Selecionado: {nomeUsuario}</p>}
+      {/* Mostrar nome do usuário selecionado */}
+      {nomeUsuario && <p>Selecionado: {nomeUsuario}</p>}
 
-        <button type="submit">Cadastrar</button>
-      </form>
-    </section>
+      <button type="submit">Cadastrar</button>
+    </form>
+  </section>
+
   );
 }
